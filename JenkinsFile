@@ -1,5 +1,7 @@
 pipeline{
-    agent any
+    agent {
+        label 'ansible'
+    }
     tools {
       maven 'MVN_HOME'
     }
@@ -8,6 +10,7 @@ pipeline{
        stage('Maven Build') {
          steps {
            echo 'Here you should trigger a maven build of your application using either bat(windows) or sh(linux)'
+		   sh "uname -a;";
          }
        }
        
