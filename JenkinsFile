@@ -9,9 +9,23 @@ pipeline{
     stages{
        stage('Maven Build') {
          steps {
-           echo 'Here you should trigger a maven build of your application using either bat(windows) or sh(linux)'
-		   sh "uname -a;";
+			// print system information
+		   sh "uname -a";
+		   
+		   // mvn build
+		   echo 'start: mvn clean package'
+           sh "mvn clean package"
+		   
          }
+		 
+		 post {
+		   always {
+				echo "end: mvn clean package"
+		   }
+		   success {
+				junit '**/target/surefire-reports/TEST-*.xml'
+		   }
+		 }
        }
        
       stage('Docker Build'){
